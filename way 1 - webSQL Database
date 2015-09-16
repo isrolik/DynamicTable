@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>webSQL Database</title>
+
+<template id="items">
+<tr>
+<td class="img_like">   </td> 
+<td class="big_small">  </td>
+<td class="img_biz">  </td>
+</tr>
+</template> 
+
+<script> 
+window.onload=function(){
+
+// Simulates receive data from the server
+var data = [{"big":"נחיתה לעסק שלך","0":"נחיתה לעסק שלך","small":"בניית דפי נחיתה לעסקים","1":"בניית דפי נחיתה לעסקים","Icon":"http:\/\/chabadanash.co.il\/apple\/landing.png","2":"http:\/\/chabadanash.co.il\/apple\/landing.png","ali":"rscha","3":"rscha"}
+,{"big":"תמונה ענקית","0":"תמונה ענקית","small":"התמונה גדולה מדאי - נא לקחת את זה בהתאם","1":"התמונה גדולה מדאי - נא לקחת את זה בהתאם","Icon":"http:\/\/www.degel.co.il\/images\/flags-logo.jpg","2":"http:\/\/www.degel.co.il\/images\/flags-logo.jpg","ali":"israel","3":"israel"}
+,{"big":"landing to biz","0":"landing to biz","small":"buliding landing pages for biz","1":"buliding landing pages for biz","Icon":"http:\/\/chabadanash.co.il\/images\/landing.jpg","2":"http:\/\/chabadanash.co.il\/images\/landing.jpg","ali":"isrolik","3":"isrolik"}
+,{"big":"banana and letter","0":"banana and letter","small":"take banana and write a letter naw!","1":"take banana and write a letter naw!","Icon":"http:\/\/chabadanash.co.il\/images\/letter.jpg","2":"http:\/\/chabadanash.co.il\/images\/letter.jpg","ali":"israelik","3":"israelik"}
+,{"big":"i david","0":"i david","small":"david say welcome","1":"david say welcome","Icon":"img/biz/empty-logo.gif","2":"img/biz/empty-logo.gif","ali":"david","3":"david"}];
+
+	var db; // db is a global variable
+		
+	if(window.openDatabase){  // webSQL Database  -> check if on this browser
+		var dbName="bizDB"; // Database Name
+		var dbVer="1.2"; // Database Version  
+		var dbComm="my biz DB is awesome...";  // Database Comment
+		var dbSize = 1024*1024*100; // Database Size -> 100MB
+	
+	    //create DB connection
+		db=openDatabase(dbName,dbVer,dbComm,dbSize,function(){
+			console.log("Database successfully created!");
+		});
+				
+		//write to DB
+		db.transaction(function(obj){
+			var tblCreateStatement="CREATE TABLE IF NOT EXISTS items (big TEXT,small TEXT,Icon TEXT,ali TEXT)"; // likes INTEGER
+			obj.executeSql(tblCreateStatement);
+			for (var i=0;i<data.length;i++)
+			{ 
+				obj.executeSql("INSERT INTO items (big,small,Icon,ali) VALUES ('"+data[i].big+"','"+data[i].small+"','"+data[i].Icon+"','"+data[i].ali+"')");
+			}
+		});
+		
+		//read from DB
+		var template = document.querySelector("#items"); // template is a adapter between the data from DB to HTML table
+		var td = template.content.querySelectorAll("td"); 
+		var tb,clone;
+		var likes = 15; // temp!!! This information also will soon arrive from the server.
+
+		db.transaction(function(obj){
+		obj.executeSql("SELECT * FROM items", [], onTable, onError); 
+		
+		function onTable(obj,results){ 
+		var leng = results.rows.length;
+		
+		for(var i=0;i<leng;i++){
+			var biz=results.rows.item(i);		
+			td[0].innerHTML = "<img src='img/biz/likes.gif' /> <br> "+ likes +" משתמשים  <br> אהבו את זה ";
+			td[1].innerHTML = "<h2>" + biz.big + "</h2> <p> " + biz.small + "</p>";
+			td[2].innerHTML =  "<a href='page_biz.php?alias="+biz.ali+"'><img src='"+biz.Icon+"'/> </a>"; // textContent -> innerHTML
+			tb = document.getElementsByTagName("tbody");
+			clone = document.importNode(template.content ,true);
+			tb[0].appendChild(clone); } // tb 0 - Because there is only one 'tbody' in page 
+
+	var sum = document.querySelector("#sum");
+	sum.innerHTML = ' סה"כ ' + leng + 'עסקים נמצאו';	}	
+		function onError(error){
+		console.log(error); }
+	  });
+	};
+	
+	
+};
+	</script>
+	</head>
+	
+	<body>
+		<div>
+		<table border="1" style="width:100%" >
+		 <thead> 
+			<tr>
+			<th> rating </th>		
+			<th> name <hr> description </th>
+			<th> logo </th>
+			</tr>
+ 		 </thead> 
+    	<tbody> 
+	  
+			<!--	<tr><td> cell </td><td> cell </td><td> cell </td></tr>	-->
+
+   		 </tbody>
+    		<tfoot>
+				<tr>
+				<td> </td>	
+ 				<td id="sum"> </td>
+				<td> </td>
+				</tr>
+			 </tfoot>
+		</table>
+		</div>
+	</body>
+</html>

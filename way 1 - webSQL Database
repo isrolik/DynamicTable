@@ -15,6 +15,9 @@
 </template> 
 
 <script> 
+
+var db; // db is a global variable
+
 window.onload=function(){
 
 // Simulates receive data from the server
@@ -24,7 +27,6 @@ var data = [{"big":"נחיתה לעסק שלך","0":"נחיתה לעסק שלך"
 ,{"big":"banana and letter","0":"banana and letter","small":"take banana and write a letter naw!","1":"take banana and write a letter naw!","Icon":"http:\/\/chabadanash.co.il\/images\/letter.jpg","2":"http:\/\/chabadanash.co.il\/images\/letter.jpg","ali":"israelik","3":"israelik"}
 ,{"big":"i david","0":"i david","small":"david say welcome","1":"david say welcome","Icon":"img/biz/empty-logo.gif","2":"img/biz/empty-logo.gif","ali":"david","3":"david"}];
 
-	var db; // db is a global variable
 		
 	if(window.openDatabase){  // webSQL Database  -> check if on this browser
 		var dbName="bizDB"; // Database Name

@@ -10,9 +10,9 @@
 		<table border="1" style="width:100%" >
 		 <thead> 
 			<tr>
-			<th> rating </td>		
-			<th> name <hr> description </td>
-			<th> logo </td>
+			<th> rating </th>		
+			<th> name <hr> description </th>
+			<th> logo </th>
 			</tr>
  		 </thead> 
     	<tbody class="itemView"> 
@@ -26,9 +26,9 @@
    		 </tbody>
     		<tfoot>
 				<tr>
-				<td></td>	
+				<td> </td>	
  				<td> total list items: 1 </td>
-				<td></td>
+				<td> </td>
 				</tr>
 			 </tfoot>
 		</table>

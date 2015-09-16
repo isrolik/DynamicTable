@@ -18,7 +18,6 @@
 		
 <script> 
 
-var db; // db is a global variable
 window.onload=function(){
 	
 // Simulates receive data from the server

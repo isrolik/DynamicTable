@@ -1,0 +1,90 @@
+# Unfortunately, no all browsers support webSQL. So we will use this way 
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>template only</title>
+		
+<template id="items">
+<tr>
+<td class="img_like">   </td> 
+<td class="big_small">  </td>
+<td class="img_biz">  </td>
+</tr>
+</template> 
+
+		
+		
+<script> 
+
+var db; // db is a global variable
+window.onload=function(){
+	
+// Simulates receive data from the server
+var data = [{"big":"נחיתה לעסק שלך","0":"נחיתה לעסק שלך","small":"בניית דפי נחיתה לעסקים","1":"בניית דפי נחיתה לעסקים","Icon":"http:\/\/chabadanash.co.il\/apple\/landing.png","2":"http:\/\/chabadanash.co.il\/apple\/landing.png","ali":"rscha","3":"rscha"}
+,{"big":"תמונה ענקית","0":"תמונה ענקית","small":"התמונה גדולה מדאי - נא לקחת את זה בהתאם","1":"התמונה גדולה מדאי - נא לקחת את זה בהתאם","Icon":"http:\/\/www.degel.co.il\/images\/flags-logo.jpg","2":"http:\/\/www.degel.co.il\/images\/flags-logo.jpg","ali":"israel","3":"israel"}
+,{"big":"landing to biz","0":"landing to biz","small":"buliding landing pages for biz","1":"buliding landing pages for biz","Icon":"http:\/\/chabadanash.co.il\/images\/landing.jpg","2":"http:\/\/chabadanash.co.il\/images\/landing.jpg","ali":"isrolik","3":"isrolik"}
+,{"big":"banana and letter","0":"banana and letter","small":"take banana and write a letter naw!","1":"take banana and write a letter naw!","Icon":"http:\/\/chabadanash.co.il\/images\/letter.jpg","2":"http:\/\/chabadanash.co.il\/images\/letter.jpg","ali":"israelik","3":"israelik"}
+,{"big":"i david","0":"i david","small":"david say welcome","1":"david say welcome","Icon":"img/biz/empty-logo.gif","2":"img/biz/empty-logo.gif","ali":"david","3":"david"}];		
+		
+		//read from data
+		var template = document.querySelector("#items");
+		var td = template.content.querySelectorAll("td");
+		var tb,clone;
+		var likes = 15; // temp!!! This information also will soon arrive from the server.
+		var leng = data.length;
+
+		for(var i=0;i<leng;i++){
+			var biz=data[i];		
+			td[0].innerHTML = "<img src='img/biz/likes.gif' /> <br> "+ likes +" משתמשים  <br> אהבו את זה ";
+			td[1].innerHTML = "<h2>" + biz.big + "</h2> <p> " + biz.small + "</p>";
+			td[2].innerHTML =  "<a href='page_biz.php?alias="+biz.ali+"'><img src='"+biz.Icon+"'/> </a>"; // textContent -> innerHTML
+			tb = document.getElementsByTagName("tbody");
+			clone = document.importNode(template.content ,true);
+			tb[0].appendChild(clone); } // tb 0 - Because there is only one 'tbody' in page 
+
+	var sum = document.querySelector("#sum");
+	sum.innerHTML = ' סה"כ ' + leng + 'עסקים נמצאו';	};
+	  
+	
+	
+	
+	</script>
+		
+	</head>
+
+	<body>
+		<div>
+		<table border="1" style="width:100%" >
+		 <thead> 
+			<tr>
+			<th> rating </th>		
+			<th> name <hr> description </th>
+			<th> logo </th>
+			</tr>
+ 		 </thead> 
+    	<tbody> 
+	  
+				
+			<!--
+			<tr>
+			<td> 9 </td>		
+			<td> isrolik net <hr> israel love programing every day </td>
+			<td> myLogo </td>
+			</tr>
+			-->
+			
+
+   		 </tbody>
+    		<tfoot>
+				<tr>
+				<td> </td>	
+ 				<td id="sum"> </td>
+				<td> </td>
+				</tr>
+			 </tfoot>
+		</table>
+		</div>
+	</body>
+</html>
